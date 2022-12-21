@@ -3,3 +3,7 @@ test.py
 **__pycache__/
 *.csv
 Notes.docx
+*.parquet
+*.parquet.gzip
+*.gz.parquet
+*_SUCCESS
