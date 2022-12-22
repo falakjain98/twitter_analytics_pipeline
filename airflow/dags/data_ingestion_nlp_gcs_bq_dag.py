@@ -7,7 +7,7 @@ from airflow import DAG
 from airflow.utils.dates import days_ago
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
-import tweepy
+from tweepy import Client, Paginator
 import pandas as pd
 
 from google.cloud import storage
