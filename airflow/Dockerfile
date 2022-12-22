@@ -35,8 +35,6 @@ RUN DOWNLOAD_URL="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/goo
 
 WORKDIR $AIRFLOW_HOME
 
-RUN pip install tweepy
-
 COPY scripts scripts
 RUN chmod +x scripts
 
