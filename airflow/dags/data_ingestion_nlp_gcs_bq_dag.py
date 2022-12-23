@@ -7,7 +7,7 @@ from airflow import DAG
 from airflow.utils.dates import days_ago
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
-from tweepy import Client, Paginator
+import tweepy
 import pandas as pd
 
 from google.cloud import storage
@@ -22,9 +22,9 @@ AIRFLOW_HOME = os.environ.get("AIRFLOW_HOME", "/opt/airflow/")
 client = tweepy.Client(bearer_token = config.bearer_token)
 
 QUERY_1_TEMPLATE = 'FIFA2022 -is:retweet'
-START_TIME_TEMPLATE = '{{ (execution_date-datetime.timedelta(days=1)).strftime(\'%Y-%m-%d\') }}T00:00:00Z'
+START_TIME_TEMPLATE = '{{ (execution_date-macros.timedelta(days=1)).strftime(\'%Y-%m-%d\') }}T00:00:00Z'
 END_TIME_TEMPLATE = '{{ execution_date.strftime(\'%Y-%m-%d\') }}T00:00:00Z'
-LOCAL_PATH_TEMPLATE = AIRFLOW_HOME + 'query_1_data_{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet.gzip'
+LOCAL_PATH_TEMPLATE = AIRFLOW_HOME + '/query_1_data_{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet.gzip'
 
 default_args = {
     "owner": "airflow",
@@ -54,7 +54,8 @@ def get_tweets(query, start_time, end_time,output_path):
                                tweet.lang]],columns = fields))
     
     # write to parquet gzipped file
-    df.to_parquet(f'{output_path}',compression='gzip')
+    print(df.head())
+    df.to_parquet(output_path, compression = 'gzip')
 
 # NOTE: DAG declaration - using a Context Manager (an implicit way)
 def download_nlp_upload_dag(
@@ -81,7 +82,7 @@ def download_nlp_upload_dag(
 # Run dag for yellow taxi
 query_1_dag = DAG(
     dag_id="query_1_data",
-    schedule_interval="0 6 2 * *",
+    schedule_interval="0 0 * * *",
     start_date=datetime.datetime(2022, 12, 19),
     end_date=datetime.datetime(2022, 12, 20),
     default_args=default_args,
