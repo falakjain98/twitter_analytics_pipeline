@@ -34,7 +34,7 @@ default_args = {
 
 def get_tweets(query, start_time, end_time,output_path):
     # output fields
-    fields = ['id','tweet','date','source','likes','RTs','lang']
+    fields = ['id','tweet','date','likes','RTs','lang']
     df = pd.DataFrame(columns = fields)
 
     # run paginated search to extract all tweet
@@ -48,13 +48,11 @@ def get_tweets(query, start_time, end_time,output_path):
                 pd.DataFrame([[tweet.id,
                                tweet.text,
                                tweet.created_at,
-                               tweet.source,
                                tweet.public_metrics['like_count'],
                                tweet.public_metrics['retweet_count'],
                                tweet.lang]],columns = fields))
     
     # write to parquet gzipped file
-    print(df.head())
     df.to_parquet(output_path, compression = 'gzip')
 
 # NOTE: DAG declaration - using a Context Manager (an implicit way)
