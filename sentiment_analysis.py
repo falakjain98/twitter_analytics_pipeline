@@ -1,3 +1,8 @@
+"""!pip install -q transformers
+!pip install -q sentencepiece
+!pip install -q textblob
+!pip install -q emot"""
+
 import pandas as pd
 
 import re
@@ -94,6 +99,10 @@ def clean_data_nlp(df):
     # Using a specific model for sentiment analysis
     specific_model = pipeline(model="cardiffnlp/twitter-roberta-base-sentiment")
 
-    df['sentiment'] = df['new_tweet'].apply(lambda x: specific_model(x)[0]['label']) 
+    df['prediction'] = df['new_tweet'].apply(lambda x: (specific_model(x)[0]['label'],specific_model(x)[0]['score']))
+    df['score'] = df['prediction'].apply(lambda x: round(x[1],2))
+    df['sentiment'] = df['prediction'].apply(lambda x: x[0])
     df['sentiment'] = df['sentiment'].map({'LABEL_2':2,'LABEL_1':1,'LABEL_0':0})
+    df['subjectivity'] = df['new_tweet'].apply(lambda x: round(TextBlob(x).sentiment.subjectivity,2))
+    df.drop(columns = ['prediction'], inplace = True)
     return (df)
