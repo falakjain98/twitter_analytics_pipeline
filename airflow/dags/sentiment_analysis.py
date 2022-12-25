@@ -13,6 +13,8 @@ from nltk.tokenize import RegexpTokenizer
 from emot.emo_unicode import UNICODE_EMOJI
 
 from textblob import TextBlob
+import tensorflow
+import torch
 from transformers import pipeline
 
 # remove hashtags
