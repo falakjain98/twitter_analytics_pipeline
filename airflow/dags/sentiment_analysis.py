@@ -1,5 +1,4 @@
 """!pip install -q transformers
-!pip install -q sentencepiece
 !pip install -q textblob
 !pip install -q emot"""
 
