@@ -4,3 +4,7 @@ pandas
 sqlalchemy
 psycopg2-binary
 tweepy
+transformers
+textblob
+emot
+nltk
