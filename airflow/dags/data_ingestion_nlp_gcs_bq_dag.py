@@ -14,7 +14,9 @@ from google.cloud import storage
 from airflow.providers.google.cloud.operators.bigquery import BigQueryCreateExternalTableOperator
 import pyarrow.csv as pv
 import pyarrow.parquet as pq
+
 import config
+from sentiment_analysis import *
 
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET = os.environ.get("GCP_GCS_BUCKET")
@@ -54,6 +56,20 @@ def get_tweets(query, start_time, end_time,output_path):
     
     # write to parquet gzipped file
     df.to_parquet(output_path, compression = 'gzip')
+    
+# udf to perform sentiment_analysis
+def perform_sentiment_analysis(local_path_template):
+    # read python file
+    df = pd.read_parquet(output_path)
+    
+    # clean data and perform sentiment analysis
+    df = clean_data_nlp(df)
+    
+    # test
+    print(df.head())
+    
+    # write to parquet gzipped file
+    df.to_parquet(output_path, compression = 'gzip')
 
 # NOTE: DAG declaration - using a Context Manager (an implicit way)
 def download_nlp_upload_dag(
@@ -74,8 +90,16 @@ def download_nlp_upload_dag(
                 "output_path" : local_path_template
             },
         )
+        
+        perform_nlp_save = PythonOperator(
+            task_id="perform_sentiment_analysis",
+            python_callable=perform_sentiment_analysis,
+            op_kwargs={
+                "output_path" : local_path_template
+            },
+        )
 
-        download_dataset_task
+        download_dataset_task >> perform_nlp_save
 
 # Run dag for yellow taxi
 query_1_dag = DAG(
