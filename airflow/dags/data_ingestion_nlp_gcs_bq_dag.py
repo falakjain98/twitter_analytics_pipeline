@@ -20,7 +20,7 @@ from sentiment_analysis import *
 
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET = os.environ.get("GCP_GCS_BUCKET")
-AIRFLOW_HOME = os.environ.get("AIRFLOW_HOME", "/opt/airflow/")
+AIRFLOW_HOME = os.environ.get("AIRFLOW_HOME", "/home/falakjain/twitter_analytics_pipeline/api_data/")
 client = tweepy.Client(bearer_token = config.bearer_token)
 
 QUERY_1_TEMPLATE = 'FIFA2022 -is:retweet'
@@ -58,7 +58,7 @@ def get_tweets(query, start_time, end_time,output_path):
     df.to_parquet(output_path, compression = 'gzip')
     
 # udf to perform sentiment_analysis
-def perform_sentiment_analysis(local_path_template):
+def perform_sentiment_analysis(output_path):
     # read python file
     df = pd.read_parquet(output_path)
     
