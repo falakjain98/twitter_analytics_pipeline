@@ -22,12 +22,15 @@ from sentiment_analysis import *
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET = os.environ.get("GCP_GCS_BUCKET")
 AIRFLOW_HOME = os.environ.get("AIRFLOW_HOME", "/home/falakjain/twitter_analytics_pipeline/api_data/")
+BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET","tweets")
 
 QUERY_1_TEMPLATE = 'FIFA2022 -is:retweet'
 START_TIME_TEMPLATE = '{{ (execution_date-macros.timedelta(days=1)).strftime(\'%Y-%m-%d\') }}T00:00:00Z'
 END_TIME_TEMPLATE = '{{ execution_date.strftime(\'%Y-%m-%d\') }}T00:00:00Z'
-LOCAL_PATH_TEMPLATE = AIRFLOW_HOME + '/query_1_data_{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet.gzip'
-GCS_PATH_TEMPLATE = "raw_tweets/{{ execution_date.strftime(\'%Y-%m\') }}/query_1_data_{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet.gzip"
+LOCAL_PATH_TEMPLATE = AIRFLOW_HOME + '/query_1_data_{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet'
+GCS_PATH_TEMPLATE = "raw_tweets/{{ execution_date.strftime(\'%Y-%m\') }}/query_1_data_{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet"
+INPUT_PART = 'raw_tweets'
+INPUT_FILETYPE = 'parquet'
 
 default_args = {
     "owner": "airflow",
@@ -58,8 +61,8 @@ def get_tweets(query, start_time, end_time,output_path):
                                tweet.public_metrics['retweet_count'],
                                tweet.lang]],columns = fields))
     
-    # write to parquet gzipped file
-    df.to_parquet(output_path, compression = 'gzip')
+    # write to parquet file
+    df.to_parquet(output_path)
     
 # udf to perform sentiment_analysis
 def perform_sentiment_analysis(output_path):
@@ -72,8 +75,8 @@ def perform_sentiment_analysis(output_path):
     # test
     print(df.head())
     
-    # write to parquet gzipped file
-    df.to_parquet(output_path, compression = 'gzip')
+    # write to parquet file
+    df.to_parquet(output_path)
     
 def upload_to_gcs(bucket, object_name, local_file):
     client_gcs = storage.Client()
@@ -125,8 +128,25 @@ def download_nlp_upload_dag(
             task_id = "rm_task",
             bash_command = f"rm {local_path_template}"
         )
+        
+        # Creating BigQuery External Table
+        bq_external_table_task = BigQueryCreateExternalTableOperator(
+            task_id=f"bq_query_1_external_table_task",
+            table_resource={
+                "tableReference": {
+                    "projectId": PROJECT_ID,
+                    "datasetId": BIGQUERY_DATASET,
+                    "tableId": f"query_1_external_table",
+                },
+                "externalDataConfiguration": {
+                    "autodetect": "True",
+                    "sourceFormat": f"{INPUT_FILETYPE.upper()}",
+                    "sourceUris": [f"gs://{BUCKET}/raw_tweets/*"],
+                },
+            },
+        )
 
-        download_dataset_task >> perform_nlp_save >> local_to_gcs_task >> rm_task
+        download_dataset_task >> perform_nlp_save >> local_to_gcs_task >> rm_task >> bq_external_table_task
 
 # Assign date variable
 date = datetime.datetime.now(timezone.utc)-datetime.timedelta(days=5)

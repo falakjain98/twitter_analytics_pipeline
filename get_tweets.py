@@ -28,5 +28,5 @@ for tweet in tweepy.Paginator(
                         tweet.public_metrics['like_count'],tweet.public_metrics['retweet_count'],tweet.lang]],
                         columns = fields))
     
-# write to parquet gzipped file
-df.to_parquet('api_data/api_data.parquet.gzip',compression='gzip')
+# write to parquet file
+df.to_parquet('api_data/api_data.parquet')
