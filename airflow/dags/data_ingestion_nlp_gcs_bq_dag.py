@@ -22,7 +22,6 @@ from sentiment_analysis import *
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET = os.environ.get("GCP_GCS_BUCKET")
 AIRFLOW_HOME = os.environ.get("AIRFLOW_HOME", "/home/falakjain/twitter_analytics_pipeline/api_data/")
-client = tweepy.Client(bearer_token = config.bearer_token)
 
 QUERY_1_TEMPLATE = 'FIFA2022 -is:retweet'
 START_TIME_TEMPLATE = '{{ (execution_date-macros.timedelta(days=1)).strftime(\'%Y-%m-%d\') }}T00:00:00Z'
@@ -40,6 +39,9 @@ def get_tweets(query, start_time, end_time,output_path):
     # output fields
     fields = ['id','tweet','date','likes','RTs','lang']
     df = pd.DataFrame(columns = fields)
+    
+    # tweepy client
+    client = tweepy.Client(bearer_token = config.bearer_token)
 
     # run paginated search to extract all tweet
     for tweet in tweepy.Paginator(
@@ -74,8 +76,8 @@ def perform_sentiment_analysis(output_path):
     df.to_parquet(output_path, compression = 'gzip')
     
 def upload_to_gcs(bucket, object_name, local_file):
-    client = storage.Client()
-    bucket = client.bucket(bucket)
+    client_gcs = storage.Client()
+    bucket = client_gcs.bucket(bucket)
     blob = bucket.blob(object_name)
     blob.upload_from_filename(local_file)
 
