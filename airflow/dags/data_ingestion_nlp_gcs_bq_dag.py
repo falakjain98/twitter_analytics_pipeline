@@ -2,6 +2,7 @@ import os
 import logging
 
 import datetime
+from datetime import timezone
 
 from airflow import DAG
 from airflow.utils.dates import days_ago
@@ -101,12 +102,14 @@ def download_nlp_upload_dag(
 
         download_dataset_task >> perform_nlp_save
 
+# Assign date variable
+date = datetime.datetime.now(timezone.utc)-datetime.timedelta(days=5)
+
 # Run dag for yellow taxi
 query_1_dag = DAG(
     dag_id="query_1_data",
     schedule_interval="0 0 * * *",
-    start_date=datetime.datetime(2022, 12, 19),
-    end_date=datetime.datetime(2022, 12, 20),
+    start_date=datetime.datetime(date.year, date.month, date.day),
     default_args=default_args,
     catchup=True,
     max_active_runs=3,
