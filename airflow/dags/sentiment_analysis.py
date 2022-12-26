@@ -74,7 +74,7 @@ def removeStopWords(str):
 # add custom words
   cachedStopWords.update(('and','I','A','http','And','This','When','It','These','these','regards','email'))
 # remove stop words
-  new_str = ' '.join([word for word in str.split() if word not in cachedStopWords or word=='not' or word=='very']) 
+  new_str = ' '.join([word for word in str.split() if word not in cachedStopWords or word=='not' or word=='very' or word == 'no']) 
   return new_str
 
 def remove_(tweet):
