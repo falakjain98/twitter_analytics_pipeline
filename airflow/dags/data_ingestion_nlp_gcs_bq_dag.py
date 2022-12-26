@@ -29,6 +29,7 @@ START_TIME_TEMPLATE = '{{ (execution_date-macros.timedelta(days=1)).strftime(\'%
 END_TIME_TEMPLATE = '{{ execution_date.strftime(\'%Y-%m-%d\') }}T00:00:00Z'
 LOCAL_PATH_TEMPLATE = AIRFLOW_HOME + '/query_1_data_{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet'
 GCS_PATH_TEMPLATE = "raw_tweets/{{ execution_date.strftime(\'%Y-%m\') }}/query_1_data_{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet"
+GCS_PARENT_FOLDER = "{{ execution_date.strftime(\'%Y-%m\') }}"
 INPUT_PART = 'raw_tweets'
 INPUT_FILETYPE = 'parquet'
 
@@ -141,7 +142,7 @@ def download_nlp_upload_dag(
                 "externalDataConfiguration": {
                     "autodetect": "True",
                     "sourceFormat": f"{INPUT_FILETYPE.upper()}",
-                    "sourceUris": [f"gs://{BUCKET}/raw_tweets/*"],
+                    "sourceUris": [f"gs://{BUCKET}/raw_tweets/{GCS_PARENT_FOLDER}/*"],
                 },
             },
         )
