@@ -80,8 +80,8 @@ def remove_(tweet):
 # apply all functions and perform sentiment analysis
 def clean_data_nlp(df):
     # apply all the functions above
-    df['hashtag'] = df.tweet.apply(func = hashtags)
-    df['mention'] = df.tweet.apply(func = mentions)
+    df['hashtag'] = df.tweet.apply(func = hashtags).astype(str)
+    df['mention'] = df.tweet.apply(func = mentions).astype(str)
     df['new_tweet'] = df.tweet.apply(func = emoji)
     df['new_tweet'] = df.new_tweet.apply(func = remove_users)
     df['new_tweet'] = df.new_tweet.apply(func = clean_html)
