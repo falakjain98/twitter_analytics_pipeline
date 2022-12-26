@@ -1,7 +1,3 @@
-"""!pip install -q transformers
-!pip install -q textblob
-!pip install -q emot"""
-
 import pandas as pd
 
 import re
