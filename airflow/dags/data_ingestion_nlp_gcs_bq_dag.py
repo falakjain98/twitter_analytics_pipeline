@@ -28,6 +28,7 @@ QUERY_1_TEMPLATE = 'FIFA2022 -is:retweet'
 START_TIME_TEMPLATE = '{{ (execution_date-macros.timedelta(days=1)).strftime(\'%Y-%m-%d\') }}T00:00:00Z'
 END_TIME_TEMPLATE = '{{ execution_date.strftime(\'%Y-%m-%d\') }}T00:00:00Z'
 LOCAL_PATH_TEMPLATE = AIRFLOW_HOME + '/query_1_data_{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet.gzip'
+GCS_PATH_TEMPLATE = "raw/{{ execution_date.strftime(\'%Y-%m\') }}/query_1_data_{{ execution_date.strftime(\'%Y-%m\') }}.parquet.gzip"
 
 default_args = {
     "owner": "airflow",
@@ -71,6 +72,12 @@ def perform_sentiment_analysis(output_path):
     
     # write to parquet gzipped file
     df.to_parquet(output_path, compression = 'gzip')
+    
+def upload_to_gcs(bucket, object_name, local_file):
+    client = storage.Client()
+    bucket = client.bucket(bucket)
+    blob = bucket.blob(object_name)
+    blob.upload_from_filename(local_file)
 
 # NOTE: DAG declaration - using a Context Manager (an implicit way)
 def download_nlp_upload_dag(
@@ -78,7 +85,8 @@ def download_nlp_upload_dag(
     query_template,
     start_time_template,
     end_time_template,
-    local_path_template
+    local_path_template,
+    gcs_path_template
 ):
     with dag:
         download_dataset_task = PythonOperator(
@@ -99,8 +107,24 @@ def download_nlp_upload_dag(
                 "output_path" : local_path_template
             },
         )
+        
+        local_to_gcs_task = PythonOperator(
+            task_id="local_to_gcs_task",
+            python_callable=upload_to_gcs,
+            op_kwargs={
+                "bucket": BUCKET,
+                "object_name": gcs_path_template,
+                "local_file": local_path_template,
+            },
+        )
+        
+        # Remove file for local folder to reduce storage
+        rm_task = BashOperator(
+            task_id = "rm_task",
+            bash_command = f"rm {local_path_template}"
+        )
 
-        download_dataset_task >> perform_nlp_save
+        download_dataset_task >> perform_nlp_save >> local_to_gcs_task >> rm_task
 
 # Assign date variable
 date = datetime.datetime.now(timezone.utc)-datetime.timedelta(days=5)
@@ -122,6 +146,7 @@ download_nlp_upload_dag(
     start_time_template = START_TIME_TEMPLATE,
     end_time_template = END_TIME_TEMPLATE,
     local_path_template = LOCAL_PATH_TEMPLATE,
+    gcs_path_template = GCS_PATH_TEMPLATE,
 )
 
 
