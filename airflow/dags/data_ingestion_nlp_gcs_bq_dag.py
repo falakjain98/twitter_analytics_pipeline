@@ -27,7 +27,7 @@ QUERY_1_TEMPLATE = 'FIFA2022 -is:retweet'
 START_TIME_TEMPLATE = '{{ (execution_date-macros.timedelta(days=1)).strftime(\'%Y-%m-%d\') }}T00:00:00Z'
 END_TIME_TEMPLATE = '{{ execution_date.strftime(\'%Y-%m-%d\') }}T00:00:00Z'
 LOCAL_PATH_TEMPLATE = AIRFLOW_HOME + '/query_1_data_{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet.gzip'
-GCS_PATH_TEMPLATE = "raw/{{ execution_date.strftime(\'%Y-%m\') }}/query_1_data_{{ execution_date.strftime(\'%Y-%m\') }}.parquet.gzip"
+GCS_PATH_TEMPLATE = "raw_tweets/{{ execution_date.strftime(\'%Y-%m\') }}/query_1_data_{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet.gzip"
 
 default_args = {
     "owner": "airflow",
