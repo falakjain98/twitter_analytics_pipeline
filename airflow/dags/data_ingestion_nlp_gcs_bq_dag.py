@@ -34,7 +34,7 @@ INPUT_FILETYPE = 'parquet'
 default_args = {
     "owner": "airflow",
     "depends_on_past": False,
-    "retries": 1,
+    "retries": 3,
 }
 
 def get_tweets(query, start_time, end_time,output_path):
