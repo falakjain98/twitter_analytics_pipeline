@@ -25,12 +25,10 @@ AIRFLOW_HOME = os.environ.get("AIRFLOW_HOME", "/home/falakjain/twitter_analytics
 BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET","tweets")
 
 QUERY_1_TEMPLATE = 'FIFA2022 -is:retweet'
+QUERY_2_TEMPLATE = 'storm -is:retweet'
+QUERY_3_TEMPLATE = 'climate change -is:retweet'
 START_TIME_TEMPLATE = '{{ (execution_date-macros.timedelta(days=1)).strftime(\'%Y-%m-%d\') }}T00:00:00Z'
 END_TIME_TEMPLATE = '{{ execution_date.strftime(\'%Y-%m-%d\') }}T00:00:00Z'
-LOCAL_PATH_TEMPLATE = AIRFLOW_HOME + '/query_1_data_{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet'
-GCS_PATH_TEMPLATE = "raw_tweets/{{ execution_date.strftime(\'%Y-%m\') }}/query_1_data_{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet"
-GCS_PARENT_FOLDER = "{{ execution_date.strftime(\'%Y-%m\') }}"
-INPUT_PART = 'raw_tweets'
 INPUT_FILETYPE = 'parquet'
 
 default_args = {
@@ -92,7 +90,9 @@ def download_nlp_upload_dag(
     start_time_template,
     end_time_template,
     local_path_template,
-    gcs_path_template
+    gcs_path_template,
+    table_id,
+    gcs_parent_folder,
 ):
     with dag:
         download_dataset_task = PythonOperator(
@@ -132,17 +132,17 @@ def download_nlp_upload_dag(
         
         # Creating BigQuery External Table
         bq_external_table_task = BigQueryCreateExternalTableOperator(
-            task_id=f"bq_query_1_external_table_task",
+            task_id=f"bq_external_table_task",
             table_resource={
                 "tableReference": {
                     "projectId": PROJECT_ID,
                     "datasetId": BIGQUERY_DATASET,
-                    "tableId": f"query_1_external_table",
+                    "tableId": table_id,
                 },
                 "externalDataConfiguration": {
                     "autodetect": "True",
                     "sourceFormat": f"{INPUT_FILETYPE.upper()}",
-                    "sourceUris": [f"gs://{BUCKET}/raw_tweets/{GCS_PARENT_FOLDER}/*"],
+                    "sourceUris": [f"gs://{BUCKET}/raw_tweets/{gcs_parent_folder}/*"],
                 },
             },
         )
@@ -152,7 +152,7 @@ def download_nlp_upload_dag(
 # Assign date variable
 date = datetime.datetime.now(timezone.utc)-datetime.timedelta(days=5)
 
-# Run dag for yellow taxi
+# Run dag for Query 1
 query_1_dag = DAG(
     dag_id="query_1_data",
     schedule_interval="0 0 * * *",
@@ -168,8 +168,53 @@ download_nlp_upload_dag(
     query_template = QUERY_1_TEMPLATE,
     start_time_template = START_TIME_TEMPLATE,
     end_time_template = END_TIME_TEMPLATE,
-    local_path_template = LOCAL_PATH_TEMPLATE,
-    gcs_path_template = GCS_PATH_TEMPLATE,
+    local_path_template = AIRFLOW_HOME + '/query_1_data_{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet',
+    gcs_path_template = "raw_tweets/query_1_data/{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet",
+    table_id="query_1_external_table",
+    gcs_parent_folder="query_1_data"
 )
 
+# Run dag for Query 2
+query_2_dag = DAG(
+    dag_id="query_2_data",
+    schedule_interval="0 0 * * *",
+    start_date=datetime.datetime(date.year, date.month, date.day),
+    default_args=default_args,
+    catchup=True,
+    max_active_runs=3,
+    tags=['tweets_de'],
+)
+
+download_nlp_upload_dag(
+    dag = query_2_dag,
+    query_template = QUERY_2_TEMPLATE,
+    start_time_template = START_TIME_TEMPLATE,
+    end_time_template = END_TIME_TEMPLATE,
+    local_path_template = AIRFLOW_HOME + '/query_2_data_{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet',
+    gcs_path_template = "raw_tweets/query_2_data/{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet",
+    table_id="query_2_external_table",
+    gcs_parent_folder="query_2_data"
+)
+
+# Run dag for Query 3
+query_3_dag = DAG(
+    dag_id="query_3_data",
+    schedule_interval="0 0 * * *",
+    start_date=datetime.datetime(date.year, date.month, date.day),
+    default_args=default_args,
+    catchup=True,
+    max_active_runs=3,
+    tags=['tweets_de'],
+)
+
+download_nlp_upload_dag(
+    dag = query_3_dag,
+    query_template = QUERY_3_TEMPLATE,
+    start_time_template = START_TIME_TEMPLATE,
+    end_time_template = END_TIME_TEMPLATE,
+    local_path_template = AIRFLOW_HOME + '/query_3_data_{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet',
+    gcs_path_template = "raw_tweets/query_3_data/{{ execution_date.strftime(\'%Y-%m-%d\') }}.parquet",
+    table_id="query_3_external_table",
+    gcs_parent_folder="query_3_data"
+)
 
