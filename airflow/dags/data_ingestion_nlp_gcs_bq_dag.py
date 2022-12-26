@@ -129,7 +129,7 @@ def download_nlp_upload_dag(
         download_dataset_task >> perform_nlp_save >> local_to_gcs_task >> rm_task
 
 # Assign date variable
-date = datetime.datetime.now(timezone.utc)-datetime.timedelta(days=6)
+date = datetime.datetime.now(timezone.utc)-datetime.timedelta(days=5)
 
 # Run dag for yellow taxi
 query_1_dag = DAG(
