@@ -8,3 +8,7 @@ Notes.docx
 *.gz.parquet
 *_SUCCESS
 **logs/
+*.tfstate
+*.tfstate.*
+**.terraform
+**.terraform.lock.*
