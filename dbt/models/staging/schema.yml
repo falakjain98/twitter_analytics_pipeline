@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+    - name: staging
+      database: dtc-de-368104
+      schema: tweets
+
+      tables:
+        - name: query_1_external_table
+        - name: query_2_external_table
+        - name: query_3_external_table
