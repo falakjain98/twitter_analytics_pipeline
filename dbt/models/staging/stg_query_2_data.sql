@@ -1,6 +1,6 @@
 {{ config(materialized='view') }}
 
-WITH query1_data AS
+WITH query2_data AS
 (
     select 
         'Query 2' as query,
@@ -23,7 +23,7 @@ select
     round(sum(IF(sentiment = 2,1,0))*100/count(distinct id),2) as positive_perc,
     round(sum(IF(sentiment = 1,1,0))*100/count(distinct id),2) as neutral_perc,
     round(sum(IF(sentiment = 0,1,0))*100/count(distinct id),2) as negative_perc,
-    avg(subjectivity) as avg_subjectivity
+    round(avg(subjectivity)*100,2) as avg_subjectivity
 from query2_data
 group by query, date
 

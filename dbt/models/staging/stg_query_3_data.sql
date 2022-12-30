@@ -23,9 +23,9 @@ select
     round(sum(IF(sentiment = 2,1,0))*100/count(distinct id),2) as positive_perc,
     round(sum(IF(sentiment = 1,1,0))*100/count(distinct id),2) as neutral_perc,
     round(sum(IF(sentiment = 0,1,0))*100/count(distinct id),2) as negative_perc,
-    avg(subjectivity) as avg_subjectivity
+    round(avg(subjectivity)*100,2) as avg_subjectivity
 from query3_data
-group by query_date
+group by query,date
 
 -- dbt run --select <model.sql> --var 'is_test_run: false'
 {% if var('is_test_run', default=true) %}
