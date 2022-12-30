@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: fact_tweets
+    description: >
+      Tweets corresponding to queries.
+      The table contains tweet sentiments and other metrics for each query as well as aggregated results over all queries
