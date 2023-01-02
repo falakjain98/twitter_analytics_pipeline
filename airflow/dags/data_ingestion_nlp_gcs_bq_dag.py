@@ -24,8 +24,8 @@ BUCKET = os.environ.get("GCP_GCS_BUCKET")
 AIRFLOW_HOME = os.environ.get("AIRFLOW_HOME", "/home/falakjain/twitter_analytics_pipeline/api_data/")
 BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET","tweets")
 
-QUERY_1_TEMPLATE = 'FIFA2022 -is:retweet'
-QUERY_2_TEMPLATE = 'storm -is:retweet'
+QUERY_1_TEMPLATE = 'new year -is:retweet'
+QUERY_2_TEMPLATE = 'storm OR flood -is:retweet'
 QUERY_3_TEMPLATE = 'climate change -is:retweet'
 START_TIME_TEMPLATE = '{{ (execution_date-macros.timedelta(days=1)).strftime(\'%Y-%m-%d\') }}T00:00:00Z'
 END_TIME_TEMPLATE = '{{ execution_date.strftime(\'%Y-%m-%d\') }}T00:00:00Z'
@@ -49,7 +49,7 @@ def get_tweets(query, start_time, end_time,output_path):
     for tweet in tweepy.Paginator(
                 client.search_recent_tweets, query=query,max_results = 10,
                 start_time = start_time, end_time = end_time, 
-                tweet_fields = ['created_at','lang','public_metrics']).flatten(limit=10):
+                tweet_fields = ['created_at','lang','public_metrics']).flatten(limit=100):
         # only parse english tweets
         if tweet.lang == 'en':
             df = df.append(
