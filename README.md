@@ -4,7 +4,7 @@
 
 ### Project Summary
 
-This repository will allow you to deploy your own analytics pipeline for your chosen twitter API queries in a few quick steps. You will need to register for a [Twitter Developer Account](https://developer.twitter.com/en/docs/twitter-api/getting-started/getting-access-to-the-twitter-api) in order to receive authorization for API calls.
+This repository will allow you to deploy your own analytics pipeline for your chosen [twitter API queries](https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query) in a few quick steps. You will need to register for a [Twitter Developer Account](https://developer.twitter.com/en/docs/twitter-api/getting-started/getting-access-to-the-twitter-api) in order to receive authorization for API calls.
 
 The following technologies are utilized in this project:
 - [GCP Services](https://cloud.google.com/): *Cloud platform*
