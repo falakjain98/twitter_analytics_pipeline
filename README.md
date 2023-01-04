@@ -1,15 +1,18 @@
-Welcome to your new dbt project!
+# Twitter Analytics Pipeline
 
-### Using the starter project
+## Welcome to my Twitter Analytics Data Engineering Project!
 
-Try running the following commands:
-- dbt run
-- dbt test
+### Project Summary
 
+This repository will allow you to deploy your own analytics pipeline for your chosen twitter API queries in a few quick steps. You will need to register for a [Twitter Developer Account](https://developer.twitter.com/en/docs/twitter-api/getting-started/getting-access-to-the-twitter-api) in order to receive authorization for API calls.
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [dbt community](http://community.getbdt.com/) to learn from other analytics engineers
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+The following technologies are utilized in this project:
+- [GCP Services](https://cloud.google.com/): *Cloud platform*
+  - [Compute Engine](https://cloud.google.com/compute): *Virtual Machine*
+  - [Cloud Storage](https://cloud.google.com/storage): *Data Lake*
+  - [BigQuery](https://cloud.google.com/bigquery): *Data Warehouse*
+- [Terraform](https://developer.hashicorp.com/terraform/downloads): *Infrastructure-as-Code (IaC)*
+- [Docker](https://www.docker.com): *Containerization*
+- [dbt](https://cloud.getdbt.com): *Data Transformation*
+- [Python (via Anaconda)](https://www.anaconda.com/products/distribution): *Programming Language*
+
