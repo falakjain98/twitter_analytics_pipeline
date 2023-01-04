@@ -15,4 +15,5 @@ The following technologies are utilized in this project:
 - [Docker](https://www.docker.com): *Containerization*
 - [dbt](https://cloud.getdbt.com): *Data Transformation*
 - [Python (via Anaconda)](https://www.anaconda.com/products/distribution): *Programming Language*
+- [SQL]: *Data Analysis*
 
