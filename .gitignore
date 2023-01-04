@@ -1,5 +1,6 @@
 config.py
 test.py
+get_tweets.py
 **__pycache__/
 *.csv
 Notes.docx
