@@ -17,3 +17,4 @@ The following technologies are utilized in this project:
 - [Python (via Anaconda)](https://www.anaconda.com/products/distribution): *Programming Language*
 - SQL: *Data Analysis*
 
+Please refer to [setup](setup.md) file for more details regarding infrastructure setup.
