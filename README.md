@@ -19,4 +19,6 @@ The following technologies are utilized in this project:
 
 Please refer to [setup](setup.md) file for more details regarding infrastructure setup.
 
+After setup, deploy the pipeline using steps on the [deploy](deploy.md) file.
+
 To learn more about Data and Analytics Engineering, check out [DataTalksClub's](https://github.com/DataTalksClub) amazing [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)!
