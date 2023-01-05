@@ -18,3 +18,5 @@ The following technologies are utilized in this project:
 - SQL: *Data Analysis*
 
 Please refer to [setup](setup.md) file for more details regarding infrastructure setup.
+
+To learn more about Data and Analytics Engineering, check out [DataTalksClub's](https://github.com/DataTalksClub) amazing [data-engineering-zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)!
