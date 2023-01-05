@@ -74,3 +74,5 @@ export GOOGLE_APPLICATION_CREDENTIALS="${HOME}/.gc/google-credentials.json"
 export PATH="${HOME}/bin:${PATH}"
 ```
   - `terraform init`, `terraform plan`, `terraform apply` and `terraform destroy` should perform IaC functions from the terraform folder in the github repo now
+
+After setup, deploy the pipeline using steps on the [deploy](deploy.md) file.
