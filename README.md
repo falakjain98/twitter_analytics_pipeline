@@ -19,4 +19,4 @@ The following technologies are utilized in this project:
 
 Please refer to [setup](setup.md) file for more details regarding infrastructure setup.
 
-To learn more about Data and Analytics Engineering, check out [DataTalksClub's](https://github.com/DataTalksClub) amazing [data-engineering-zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)!
+To learn more about Data and Analytics Engineering, check out [DataTalksClub's](https://github.com/DataTalksClub) amazing [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)!
