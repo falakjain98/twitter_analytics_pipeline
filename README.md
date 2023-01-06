@@ -17,6 +17,10 @@ The following technologies are utilized in this project:
 - [Python (via Anaconda)](https://www.anaconda.com/products/distribution): *Programming Language*
 - SQL: *Data Analysis*
 
+Project Architecture:
+
+<img width="658" alt="image" src="https://user-images.githubusercontent.com/54712290/210924694-8914b41b-7f66-451a-a2e7-71f5a2e0ec31.png">
+
 Please refer to [setup](setup.md) file for more details regarding infrastructure setup.
 
 After setup, deploy the pipeline using steps on the [deploy](deploy.md) file.
