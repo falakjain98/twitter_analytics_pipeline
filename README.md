@@ -19,7 +19,7 @@ The following technologies are utilized in this project:
 
 Project Architecture:
 
-<img width="1000" alt="image" src="https://user-images.githubusercontent.com/54712290/210924694-8914b41b-7f66-451a-a2e7-71f5a2e0ec31.png">
+<img width="900" alt="image" src="https://user-images.githubusercontent.com/54712290/210926048-9b9f0c75-2918-4022-9073-7e07a7f557f1.png">
 
 Please refer to [setup](setup.md) file for more details regarding infrastructure setup.
 
