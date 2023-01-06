@@ -12,7 +12,7 @@ cte2 as (
     select 
         'All Queries' query,
         date,
-        count(distinct tweet_count) as tweet_count,
+        sum(tweet_count) as tweet_count,
         sum(total_likes) as total_likes,
         sum(total_retweets) as total_retweets,
         round(avg(positive_perc),2) as positive_perc,
