@@ -49,7 +49,7 @@ def get_tweets(query, start_time, end_time,output_path):
     for tweet in tweepy.Paginator(
                 client.search_recent_tweets, query=query,max_results = 10,
                 start_time = start_time, end_time = end_time, 
-                tweet_fields = ['created_at','lang','public_metrics']).flatten(limit=100):
+                tweet_fields = ['created_at','lang','public_metrics']).flatten():
         # only parse english tweets
         if tweet.lang == 'en':
             df = df.append(
