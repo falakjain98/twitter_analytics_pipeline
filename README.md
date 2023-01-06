@@ -21,7 +21,7 @@ The following technologies are utilized in this project:
 
 ### Dashboard
 
-The analytics dashboard which utilizes this pipeline can be viewed at https://datastudio.google.com/reporting/07fdca1d-a669-4356-acc5-3b2a4faaabb0/page/DrhBD.
+The analytics dashboard which utilizes this pipeline can be viewed at https://datastudio.google.com/reporting/07fdca1d-a669-4356-acc5-3b2a4faaabb0/page/DrhBD (In Progress, will be completed by 01/09)
 
 The data can be filtered by date and query in order to customize analysis
 
