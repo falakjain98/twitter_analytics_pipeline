@@ -21,4 +21,6 @@ Please refer to [setup](setup.md) file for more details regarding infrastructure
 
 After setup, deploy the pipeline using steps on the [deploy](deploy.md) file.
 
+The analytics dashboard which utilizes this pipeline can be viewed at https://datastudio.google.com/reporting/07fdca1d-a669-4356-acc5-3b2a4faaabb0/page/DrhBD.
+
 To learn more about Data and Analytics Engineering, check out [DataTalksClub's](https://github.com/DataTalksClub) amazing [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)!
