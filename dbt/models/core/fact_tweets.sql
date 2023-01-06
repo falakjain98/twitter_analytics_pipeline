@@ -1,4 +1,4 @@
-{{ config(materialized='view') }}
+{{ config(materialized='table') }}
 
 with cte1 as (
     select * from {{ ref('stg_query_1_data') }}
