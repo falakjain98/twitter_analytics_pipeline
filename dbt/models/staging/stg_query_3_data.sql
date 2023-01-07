@@ -3,7 +3,7 @@
 WITH query3_data as
 (
     select 
-        'Query 3' as query,
+        'climate change' as query,
         cast(id as integer) as id,
         FORMAT_DATE('%Y-%m-%d', cast(date as timestamp)) as date,
         cast(likes as integer) as likes,

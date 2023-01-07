@@ -3,7 +3,7 @@
 WITH query2_data AS
 (
     select 
-        'Query 2' as query,
+        'storm OR flood' as query,
         cast(id as integer) as id,
         FORMAT_DATE('%Y-%m-%d', cast(date as timestamp)) as date,
         cast(likes as integer) as likes,
