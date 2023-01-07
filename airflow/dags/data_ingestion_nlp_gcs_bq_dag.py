@@ -24,7 +24,7 @@ BUCKET = os.environ.get("GCP_GCS_BUCKET")
 AIRFLOW_HOME = os.environ.get("AIRFLOW_HOME", "/home/falakjain/twitter_analytics_pipeline/api_data/")
 BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET","tweets")
 
-QUERY_1_TEMPLATE = 'new year lang:en -is:retweet'
+QUERY_1_TEMPLATE = 'crypto lang:en -is:retweet'
 QUERY_2_TEMPLATE = 'storm OR flood lang:en -is:retweet'
 QUERY_3_TEMPLATE = 'climate change lang:en -is:retweet'
 START_TIME_TEMPLATE = '{{ (execution_date-macros.timedelta(days=1)).strftime(\'%Y-%m-%d\') }}T00:00:00Z'

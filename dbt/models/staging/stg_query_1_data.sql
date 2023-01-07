@@ -3,7 +3,7 @@
 WITH query1_data AS
 (
     select 
-        'new year' as query,
+        'crypto' as query,
         cast(id as integer) as id,
         FORMAT_DATE('%Y-%m-%d', cast(date as timestamp)) as date,
         cast(likes as integer) as likes,
