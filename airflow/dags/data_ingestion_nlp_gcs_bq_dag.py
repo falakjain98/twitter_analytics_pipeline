@@ -43,11 +43,11 @@ def get_tweets(query, start_time, end_time,output_path):
     df = pd.DataFrame(columns = fields)
     
     # tweepy client
-    client = tweepy.Client(bearer_token = config.bearer_token)
+    client = tweepy.Client(bearer_token = config.bearer_token,wait_on_rate_limit = True)
 
     # run paginated search to extract all tweet
     for tweet in tweepy.Paginator(
-                client.search_recent_tweets, query=query,max_results = 10,
+                client.search_recent_tweets, query=query,max_results = 100,
                 start_time = start_time, end_time = end_time, 
                 tweet_fields = ['created_at','lang','public_metrics']).flatten():
         # only parse english tweets
