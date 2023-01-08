@@ -10,7 +10,7 @@
 
 4. Navigate to the airflow directory within the git repo folder `cd twitter_analytics_pipeline/airflow/`
 
-5. Enter your desired [Twitter API queries](https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query) within `dags/data-ingestion-nlp-bq-dag.py`
+5. Enter your desired [Twitter API queries](https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query) within `dags/data-ingestion-nlp-bq-dag.py` and the staging sql codes in `dbt/models/staging'
 
 6. Build docker-compose image `docker-compose build`
 
