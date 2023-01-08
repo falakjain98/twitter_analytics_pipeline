@@ -21,7 +21,10 @@ The following technologies are utilized in this project:
 
 ### Dashboard
 
-The analytics dashboard which utilizes this pipeline can be viewed at https://datastudio.google.com/reporting/07fdca1d-a669-4356-acc5-3b2a4faaabb0/page/DrhBD (In Progress, will be completed by 01/09)
+The analytics dashboard which utilizes this pipeline can be viewed at https://datastudio.google.com/reporting/07fdca1d-a669-4356-acc5-3b2a4faaabb0/page/DrhBD
+
+<img width="900" alt="image" src="https://user-images.githubusercontent.com/54712290/211177941-ebcea31a-dbd9-41b3-8875-423cda838879.png">
+
 
 The data can be filtered by date and query in order to customize analysis
 
@@ -30,6 +33,8 @@ Metrics Displayed (for each query and total):
 2. Change in daily % of positive, negative and neutral tweets
 3. Total number of tweets, likes and retweets based on date range selection
 4. Average tweet sentiment based on date range selection
+
+* Please note that keeping the free Twitter API rate limits in mind, the pipeline will only search 450 tweets each day for each query. The limit can be removed by a user from the DAG file.
 
 ### Setup & Deploy
 Please refer to [setup](setup.md) file for more details regarding infrastructure setup.
