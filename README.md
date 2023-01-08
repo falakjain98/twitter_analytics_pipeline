@@ -23,7 +23,7 @@ The following technologies are utilized in this project:
 
 The analytics dashboard which utilizes this pipeline can be viewed at https://datastudio.google.com/reporting/07fdca1d-a669-4356-acc5-3b2a4faaabb0/page/DrhBD
 
-<img width="900" alt="image" src="https://user-images.githubusercontent.com/54712290/211177959-5397826f-3b72-48b3-b415-3723c5b91865.png">
+<img width="900" alt="image" src="https://user-images.githubusercontent.com/54712290/211177978-67a56a7e-229e-41f8-964c-8b667eb984b5.png">
 
 The data can be filtered by date and query in order to customize analysis
 
