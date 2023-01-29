@@ -1,6 +1,6 @@
 # Project setup details
 
-## Steps to create infrastructure for pipeline (from a windows perso
+## Steps to create infrastructure for pipeline (from a windows personal computer)
 
 ### GCP VM (+ SSH Access)
 
