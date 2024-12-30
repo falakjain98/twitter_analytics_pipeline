@@ -39,8 +39,3 @@ Metrics Displayed (for each query and total):
 Please refer to [setup](setup.md) file for more details regarding infrastructure setup.
 
 After setup, deploy the pipeline using steps on the [deploy](deploy.md) file.
-
-### Learn More
-To learn more about Data and Analytics Engineering, check out [DataTalksClub's](https://github.com/DataTalksClub) amazing [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)!
-
-Link to my report from their Data Engineering Zoomcamp: [Taxi Trips Data](https://datastudio.google.com/reporting/d9c8aab0-4ab9-4acf-9444-0135a1eda5ae)
